@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -132,34 +133,6 @@ export default function CertificationsContent() {
           </p>
         </motion.div>
 
-        {/* Stats Section */}
-        <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-        >
-          {[
-            { number: "9+", label: "Certifications", icon: Award },
-            { number: "1000+", label: "Hours of Learning", icon: Calendar },
-            { number: "20+", label: "Technologies", icon: Code },
-            { number: "Top 3", label: "AlmaBetter Ranking", icon: Trophy }
-          ].map((stat, index) => (
-            <motion.div
-              key={index}
-              className="glass p-6 rounded-xl text-center"
-              whileHover={{ scale: 1.05 }}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 + index * 0.1 }}
-            >
-              <stat.icon className="w-8 h-8 text-secondary mx-auto mb-3" />
-              <div className="text-3xl font-bold text-secondary mb-2">{stat.number}</div>
-              <div className="text-sm text-muted-foreground">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
-
         {/* Filter Section */}
         <motion.div
           className="flex flex-wrap justify-center gap-3 mb-12"
@@ -174,13 +147,20 @@ export default function CertificationsContent() {
               variant={filter === category ? "default" : "outline"}
               size="sm"
               onClick={() => handleFilterChange(category)}
-              className={`transition-all duration-300 ${
+              className={`transition-all duration-300 relative overflow-hidden ${
                 filter === category 
-                  ? "bg-secondary text-secondary-foreground" 
-                  : "hover:bg-secondary/10"
+                  ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white border-transparent shadow-lg shadow-blue-500/25" 
+                  : "hover:bg-secondary/10 border-secondary/30 text-secondary hover:border-secondary"
               }`}
+              style={filter === category ? {
+                background: "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%)",
+                boxShadow: "0 4px 20px rgba(59, 130, 246, 0.3)"
+              } : {}}
             >
-              {category}
+              {filter === category && (
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-pulse" />
+              )}
+              <span className="relative z-10">{category}</span>
             </Button>
           ))}
         </motion.div>
@@ -195,87 +175,151 @@ export default function CertificationsContent() {
           {filteredCertifications.map((cert, index) => (
             <motion.div
               key={index}
-              className="glass rounded-xl overflow-hidden card-hover"
+              className="glass rounded-xl overflow-hidden card-hover h-full flex flex-col relative group"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index }}
-              whileHover={{ y: -10 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              style={{
+                background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
+              }}
             >
+              {/* Flashy overlay effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+              
               {/* Certificate Image */}
-              <div className="relative h-48 overflow-hidden bg-muted">
-                <img
+              <div className="relative h-48 overflow-hidden bg-muted group/image">
+                <Image
                   src={cert.image}
                   alt={cert.title}
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                  fill
+                  className="object-cover transition-transform duration-300 hover:scale-110"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                 />
+
+                {/* Status Badge */}
                 <div className="absolute top-4 right-4">
                   <Badge 
                     variant="secondary" 
-                    className="bg-secondary/90 text-secondary-foreground"
+                    className="bg-gradient-to-r from-green-500 to-emerald-500 text-white border-none shadow-lg shadow-green-500/30"
                   >
                     {cert.status}
                   </Badge>
                 </div>
               </div>
 
-              <div className="p-6">
+              <div className="p-6 flex-1 flex flex-col">
                 {/* Title and Date */}
                 <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-semibold text-foreground line-clamp-2">
+                  <h3 className="text-xl font-semibold text-blue-400 line-clamp-2">
                     {cert.title}
                   </h3>
-                  <span className="text-sm text-secondary font-medium ml-2">
+                  <span className="text-sm text-blue-400 font-medium ml-2 bg-blue-500/10 px-2 py-1 rounded-full">
                     {cert.date}
                   </span>
                 </div>
 
                 {/* Issuer */}
-                <p className="text-secondary font-medium mb-3">{cert.issuer}</p>
+                <div className="mb-3">
+                  <span className="text-xs text-blue-300/80 bg-blue-500/5 px-2 py-1 rounded-md border border-blue-400/20">
+                    {cert.issuer}
+                  </span>
+                </div>
 
                 {/* Achievement Badge */}
                 {cert.achievement && (
                   <div className="mb-3">
-                    <Badge variant="outline" className="border-secondary text-secondary">
-                      <Trophy className="w-3 h-3 mr-1" />
+                    <Badge 
+                      variant="outline" 
+                      className="border-cyan-400 text-cyan-400 bg-cyan-400/10 shadow-lg shadow-cyan-400/20"
+                      style={{
+                        background: "linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)",
+                        borderColor: "#22d3ee"
+                      }}
+                    >
+                      <Trophy className="w-3 h-3 mr-1 text-yellow-400" />
                       {cert.achievement}
                     </Badge>
                   </div>
                 )}
 
                 {/* Description */}
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3">
+                <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3 flex-1">
                   {cert.description}
                 </p>
 
                 {/* Skills */}
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {cert.skills.slice(0, 4).map((skill, skillIndex) => (
+                  {cert.skills.map((skill, skillIndex) => (
                     <Badge 
                       key={skillIndex} 
                       variant="outline" 
-                      className="text-xs border-muted-foreground/30"
+                      className="text-xs border-blue-400/40 text-blue-300 bg-blue-500/10 hover:bg-blue-500/20 transition-colors"
                     >
                       {skill}
                     </Badge>
                   ))}
-                  {cert.skills.length > 4 && (
-                    <Badge variant="outline" className="text-xs border-muted-foreground/30">
-                      +{cert.skills.length - 4} more
-                    </Badge>
-                  )}
                 </div>
 
-                {/* View Certificate Button */}
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full group border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground"
-                  onClick={() => window.open(cert.image, '_blank')}
-                >
-                  View Certificate
-                  <ExternalLink className="w-4 h-4 ml-2 transition-transform group-hover:scale-110" />
-                </Button>
+                {/* View Certificate Button - Always at bottom */}
+                <div className="mt-auto">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full group relative overflow-hidden border-cyan-400 text-cyan-400 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 hover:text-white transition-all duration-300 shadow-lg shadow-cyan-400/20"
+                    onClick={() => window.open(cert.image, '_blank')}
+                    style={{
+                      background: "linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%)",
+                      backdropFilter: "blur(5px)",
+                      boxShadow: "0 4px 16px rgba(34, 211, 238, 0.2)"
+                    }}
+                  >
+                    {/* Button flashy effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
+                    <span className="relative z-10">View Certificate</span>
+                    <ExternalLink className="relative z-10 w-4 h-4 ml-2 transition-transform group-hover:scale-110" />
+                  </Button>
+                </div>
               </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Stats Section - Moved below certifications */}
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 mb-16"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2 }}
+        >
+          {[
+            { number: "9+", label: "Certifications", icon: Award },
+            { number: "1000+", label: "Hours of Learning", icon: Calendar },
+            { number: "20+", label: "Technologies", icon: Code },
+            { number: "Top 3", label: "AlmaBetter Ranking", icon: Trophy }
+          ].map((stat, index) => (
+            <motion.div
+              key={index}
+              className="glass p-6 rounded-xl text-center relative group overflow-hidden"
+              whileHover={{ scale: 1.05, y: -5 }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.3 + index * 0.1 }}
+              style={{
+                background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
+              }}
+            >
+              {/* Flashy overlay effect for stats */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+              <stat.icon className="relative z-10 w-8 h-8 text-cyan-400 mx-auto mb-3" />
+              <div className="relative z-10 text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">{stat.number}</div>
+              <div className="relative z-10 text-sm text-blue-300">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>
@@ -290,12 +334,6 @@ export default function CertificationsContent() {
           <p className="text-lg text-muted-foreground mb-6">
             Continuously learning and expanding my skill set to stay current with industry trends.
           </p>
-          <Button 
-            size="lg" 
-            className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
-          >
-            View All Projects
-          </Button>
         </motion.div>
       </div>
     </div>
