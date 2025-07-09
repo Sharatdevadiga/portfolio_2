@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'sharath-devadiga-portfolio.netlify.app',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

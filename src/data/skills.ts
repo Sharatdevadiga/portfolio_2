@@ -1,123 +1,112 @@
-import { Skill } from '@/types';
+export interface Skill {
+  name: string;
+  icon: string;
+  color: string;
+  category: string;
+}
 
 export const skills: Skill[] = [
   // Frontend
   {
     name: "React",
     icon: "⚛️",
-    proficiency: "advanced",
-    category: "frontend"
+    color: "#61DAFB",
+    category: "Frontend"
   },
   {
     name: "Next.js",
     icon: "▲",
-    proficiency: "advanced",
-    category: "frontend"
+    color: "#FFFFFF",
+    category: "Frontend"
   },
   {
     name: "TypeScript",
     icon: "TS",
-    proficiency: "advanced",
-    category: "frontend"
+    color: "#3178C6",
+    category: "Frontend"
   },
   {
     name: "JavaScript",
     icon: "JS",
-    proficiency: "expert",
-    category: "frontend"
+    color: "#F7DF1E",
+    category: "Frontend"
   },
   {
     name: "Redux",
     icon: "🔄",
-    proficiency: "intermediate",
-    category: "frontend"
+    color: "#764ABC",
+    category: "Frontend"
   },
   {
     name: "Tailwind",
     icon: "🎨",
-    proficiency: "advanced",
-    category: "frontend"
+    color: "#06B6D4",
+    category: "Frontend"
   },
   {
     name: "HTML5",
     icon: "📄",
-    proficiency: "expert",
-    category: "frontend"
+    color: "#E34F26",
+    category: "Frontend"
   },
   {
     name: "CSS3",
     icon: "🎨",
-    proficiency: "expert",
-    category: "frontend"
+    color: "#1572B6",
+    category: "Frontend"
   },
   
   // Backend
   {
     name: "Node.js",
     icon: "🟢",
-    proficiency: "advanced",
-    category: "backend"
+    color: "#339933",
+    category: "Backend"
   },
   {
     name: "Express.js",
     icon: "⚡",
-    proficiency: "advanced",
-    category: "backend"
+    color: "#FFFFFF",
+    category: "Backend"
   },
   {
     name: "Python",
     icon: "🐍",
-    proficiency: "intermediate",
-    category: "backend"
+    color: "#3776AB",
+    category: "Backend"
   },
   
   // Database
   {
     name: "MongoDB",
     icon: "🍃",
-    proficiency: "intermediate",
-    category: "database"
+    color: "#47A248",
+    category: "Database"
   },
   {
     name: "PostgreSQL",
     icon: "🐘",
-    proficiency: "intermediate",
-    category: "database"
+    color: "#336791",
+    category: "Database"
   },
   
   // Tools & Cloud
   {
     name: "Git",
     icon: "📋",
-    proficiency: "advanced",
-    category: "tools"
+    color: "#F05032",
+    category: "Tools"
   },
   {
     name: "AWS",
     icon: "☁️",
-    proficiency: "beginner",
-    category: "cloud"
+    color: "#FF9900",
+    category: "Cloud"
   },
   {
     name: "Docker",
     icon: "🐳",
-    proficiency: "intermediate",
-    category: "tools"
+    color: "#2496ED",
+    category: "Tools"
   }
 ];
-
-export const skillCategories = [
-  "frontend",
-  "backend", 
-  "database",
-  "tools",
-  "cloud"
-];
-
-export const getSkillsByCategory = (category: string): Skill[] => {
-  return skills.filter(skill => skill.category === category);
-};
-
-export const getAllSkillCategories = (): string[] => {
-  return [...new Set(skills.map(skill => skill.category))];
-};

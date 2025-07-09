@@ -7,10 +7,16 @@ import Link from "next/link";
 import { useState, useEffect, useMemo } from "react";
 
 export default function HeroSection() {
+  const [mounted, setMounted] = useState(false);
   const [isCodeRunning, setIsCodeRunning] = useState(false);
   const [currentCodeIndex, setCurrentCodeIndex] = useState(0);
   const [typedCode, setTypedCode] = useState("");
   const [showOutput, setShowOutput] = useState(false);
+
+  // Ensure consistent rendering between server and client
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const codeSnippets = useMemo(() => [
     {
@@ -73,19 +79,26 @@ projects.map(p => "✅ " + p);`,
   }, [codeSnippets.length]);
 
   useEffect(() => {
+    if (!codeSnippets[currentCodeIndex]) return;
+    
     const currentSnippet = codeSnippets[currentCodeIndex];
     let currentIndex = 0;
+    let timeoutId: NodeJS.Timeout;
     
     const typeCode = () => {
       if (currentIndex < currentSnippet.code.length) {
         setTypedCode(currentSnippet.code.slice(0, currentIndex + 1));
         currentIndex++;
-        setTimeout(typeCode, 50);
+        timeoutId = setTimeout(typeCode, 50);
       }
     };
 
-    const timeout = setTimeout(typeCode, 1000);
-    return () => clearTimeout(timeout);
+    const initialTimeout = setTimeout(typeCode, 1000);
+    
+    return () => {
+      clearTimeout(initialTimeout);
+      clearTimeout(timeoutId);
+    };
   }, [currentCodeIndex, codeSnippets]);
 
   const runCode = () => {
@@ -109,13 +122,48 @@ projects.map(p => "✅ " + p);`,
     }
   };
 
+  // Don't render animations and dynamic content until client-side hydration is complete
+  if (!mounted) {
+    return (
+      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/30 via-background to-primary/20 overflow-hidden transition-colors duration-300">
+        <div className="container mx-auto px-6 py-20 relative">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-8">
+              <div className="space-y-6">
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold font-poppins leading-tight">
+                  <span className="text-foreground">Software</span>
+                  <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Developer</span>
+                </h1>
+                
+                <p className="text-xl md:text-2xl text-foreground/80 max-w-2xl leading-relaxed">
+                  Building efficient, user-friendly web applications with clean code and modern technologies. 
+                  Passionate about creating digital solutions that make a difference.
+                </p>
+              </div>
+            </div>
+            
+            <div className="relative">
+              <div className="aspect-square bg-gradient-to-br from-primary/10 to-accent/10 rounded-3xl p-8 border border-primary/20">
+                <div className="bg-background/30 rounded-lg p-3 h-52">
+                  <div className="text-xs font-mono text-foreground/90">
+                    Loading...
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500/30 via-background to-blue-500/20 overflow-hidden transition-colors duration-300">
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/30 via-background to-primary/20 overflow-hidden transition-colors duration-300">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-3/4 left-3/4 w-60 h-60 bg-blue-500/5 rounded-full blur-2xl animate-pulse delay-500"></div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-3/4 left-3/4 w-60 h-60 bg-primary/5 rounded-full blur-2xl animate-pulse delay-500"></div>
       </div>
       
       <div className="container mx-auto px-6 py-20 relative">
@@ -128,7 +176,7 @@ projects.map(p => "✅ " + p);`,
           <motion.div className="space-y-8" variants={itemVariants}>
             <div className="space-y-6">
               <motion.h1 
-                className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight"
+                className="text-5xl md:text-7xl lg:text-8xl font-bold font-poppins leading-tight"
                 variants={itemVariants}
               >
                 <span className="text-foreground">Software</span>
@@ -136,7 +184,7 @@ projects.map(p => "✅ " + p);`,
               </motion.h1>
               
               <motion.p 
-                className="text-xl md:text-2xl text-muted-foreground max-w-2xl leading-relaxed"
+                className="text-xl md:text-2xl text-foreground/80 max-w-2xl leading-relaxed"
                 variants={itemVariants}
               >
                 Building efficient, user-friendly web applications with clean code and modern technologies. 
@@ -144,16 +192,16 @@ projects.map(p => "✅ " + p);`,
               </motion.p>
               
               <motion.div className="flex flex-wrap gap-4" variants={itemVariants}>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                <div className="flex items-center gap-2 text-foreground/60">
+                  <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                   <span>1+ Year Experience</span>
                 </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse delay-300"></div>
+                <div className="flex items-center gap-2 text-foreground/60">
+                  <div className="w-2 h-2 bg-accent rounded-full animate-pulse delay-300"></div>
                   <span>15+ Projects Built</span>
                 </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse delay-600"></div>
+                <div className="flex items-center gap-2 text-foreground/60">
+                  <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-600"></div>
                   <span>Growing Developer</span>
                 </div>
               </motion.div>
@@ -163,7 +211,7 @@ projects.map(p => "✅ " + p);`,
               className="flex flex-col sm:flex-row gap-4"
               variants={itemVariants}
             >
-              <Button asChild className="px-8 py-4 bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+              <Button asChild className="px-8 py-4 bg-primary text-primary-foreground font-semibold hover:bg-primary/80 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/25">
                 <Link href="/projects">
                   <ArrowRight className="mr-2" size={20} />
                   View My Work
@@ -171,7 +219,7 @@ projects.map(p => "✅ " + p);`,
               </Button>
               <Button 
                 variant="outline" 
-                className="px-8 py-4 font-semibold transition-all duration-300 hover:scale-105"
+                className="px-8 py-4 backdrop-blur-sm text-foreground font-semibold border-border/50 hover:bg-foreground/10 transition-all duration-300 hover:scale-105"
                 asChild
               >
                 <a href="https://docs.google.com/document/d/1k9g79yP7gntQS8wxfcD88VLYUIoUm9YBlRamOUivllY/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
@@ -195,7 +243,7 @@ projects.map(p => "✅ " + p);`,
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-12 h-12 border border-border/50 backdrop-blur-sm rounded-full flex items-center justify-center text-muted-foreground hover:text-blue-500 hover:border-blue-500/50 transition-all duration-300"
+                  className="w-12 h-12 backdrop-blur-sm border border-border/50 rounded-full flex items-center justify-center text-foreground/60 hover:text-primary transition-all duration-300 hover:scale-110"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -215,7 +263,7 @@ projects.map(p => "✅ " + p);`,
             <div className="relative">
               {/* 3D Card Container */}
               <motion.div 
-                className="relative backdrop-blur-sm border border-border/50 rounded-3xl p-8 bg-background/50"
+                className="relative backdrop-blur-xl border-2 border-border/30 rounded-3xl p-8 bg-background/50"
                 whileHover={{ 
                   rotateY: -15,
                   rotateX: 5,
@@ -226,7 +274,7 @@ projects.map(p => "✅ " + p);`,
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <motion.div
-                  className="aspect-square bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl p-4 overflow-hidden relative border border-border/30"
+                  className="aspect-square bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl p-4 overflow-hidden relative border border-primary/20"
                   animate={{ 
                     boxShadow: ["0 0 20px rgba(59, 130, 246, 0.2)", "0 0 40px rgba(59, 130, 246, 0.3)", "0 0 20px rgba(59, 130, 246, 0.2)"]
                   }}
@@ -250,20 +298,20 @@ projects.map(p => "✅ " + p);`,
                     </div>
                     <motion.button
                       onClick={runCode}
-                      className="flex items-center gap-1 px-2 py-1 bg-blue-500/20 hover:bg-blue-500/30 rounded text-xs text-blue-500 font-medium transition-colors"
+                      className="flex items-center gap-1 px-2 py-1 bg-accent/20 hover:bg-accent/30 rounded text-xs text-accent font-medium transition-colors"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       disabled={isCodeRunning}
                     >
                       <Play size={12} />
-                      {isCodeRunning ? "Running..." : "Run"}
+                      Run
                     </motion.button>
                   </motion.div>
 
                   {/* Code Content */}
                   <div className="bg-background/30 rounded-lg p-3 mb-2 h-52 overflow-hidden">
                     <motion.pre 
-                      className="text-xs font-mono leading-relaxed"
+                      className="text-xs font-mono text-foreground/90 leading-relaxed"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.5 }}
@@ -271,7 +319,7 @@ projects.map(p => "✅ " + p);`,
                       <code className="whitespace-pre-wrap">
                         {typedCode}
                         <motion.span 
-                          className="inline-block w-2 h-4 bg-blue-500 ml-1"
+                          className="inline-block w-2 h-4 bg-accent ml-1"
                           animate={{ opacity: [1, 0, 1] }}
                           transition={{ duration: 1, repeat: Infinity }}
                         />
@@ -286,15 +334,46 @@ projects.map(p => "✅ " + p);`,
                     animate={{ opacity: showOutput ? 1 : 0.5 }}
                   >
                     <div className="flex items-center gap-1.5 mb-1">
-                      <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                      <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
                       <span className="text-xs text-muted-foreground">Output</span>
                     </div>
-                    {showOutput && (
+                    {isCodeRunning ? (
+                      <motion.div
+                        className="flex gap-1"
+                        initial="hidden"
+                        animate="visible"
+                        variants={{
+                          visible: {
+                            transition: {
+                              staggerChildren: 0.2,
+                            },
+                          },
+                        }}
+                      >
+                        {[...Array(3)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            className="w-1 h-1 bg-accent rounded-full"
+                            variants={{
+                              hidden: { opacity: 0.3 },
+                              visible: {
+                                opacity: [0.3, 1, 0.3],
+                                transition: {
+                                  duration: 0.8,
+                                  repeat: Infinity,
+                                  ease: "easeInOut",
+                                },
+                              },
+                            }}
+                          />
+                        ))}
+                      </motion.div>
+                    ) : showOutput ? (
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="text-xs text-blue-500 font-medium"
+                        className="text-xs text-accent font-medium"
                       >
                         {Array.isArray(codeSnippets[currentCodeIndex].output) ? (
                           codeSnippets[currentCodeIndex].output.map((line, index) => (
@@ -317,13 +396,13 @@ projects.map(p => "✅ " + p);`,
                           </motion.div>
                         )}
                       </motion.div>
-                    )}
+                    ) : null}
                   </motion.div>
 
                   {/* Loading Animation */}
                   {isCodeRunning && (
                     <motion.div 
-                      className="absolute inset-0 bg-blue-500/10 rounded-2xl flex items-center justify-center"
+                      className="absolute inset-0 bg-primary/10 rounded-2xl flex items-center justify-center"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
@@ -343,7 +422,7 @@ projects.map(p => "✅ " + p);`,
                         {[...Array(3)].map((_, i) => (
                           <motion.div
                             key={i}
-                            className="w-3 h-3 bg-blue-500 rounded-full"
+                            className="w-3 h-3 bg-accent rounded-full"
                             variants={{
                               hidden: { y: 0 },
                               visible: {
@@ -364,7 +443,7 @@ projects.map(p => "✅ " + p);`,
                 
                 {/* Floating Elements */}
                 <motion.div
-                  className="absolute -top-6 -right-6 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white shadow-lg"
+                  className="absolute -top-6 -right-6 w-12 h-12 bg-accent rounded-full flex items-center justify-center text-background shadow-lg"
                   animate={{ 
                     y: [0, -10, 0],
                     rotate: [0, 360]
@@ -378,7 +457,7 @@ projects.map(p => "✅ " + p);`,
                 </motion.div>
                 
                 <motion.div
-                  className="absolute -bottom-6 -left-6 w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white shadow-lg"
+                  className="absolute -bottom-6 -left-6 w-10 h-10 bg-primary rounded-full flex items-center justify-center text-primary-foreground shadow-lg"
                   animate={{ 
                     y: [0, -8, 0],
                     x: [0, 5, 0]
@@ -394,7 +473,7 @@ projects.map(p => "✅ " + p);`,
                 </motion.div>
                 
                 <motion.div
-                  className="absolute top-1/2 -right-8 w-8 h-8 bg-white/20 rounded-full"
+                  className="absolute top-1/2 -right-8 w-8 h-8 bg-foreground/20 rounded-full"
                   animate={{ 
                     scale: [1, 1.5, 1],
                     opacity: [0.5, 1, 0.5]
@@ -408,7 +487,7 @@ projects.map(p => "✅ " + p);`,
               </motion.div>
               
               {/* Background Glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-3xl blur-3xl opacity-30 -z-10"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl blur-3xl opacity-30 -z-10"></div>
             </div>
           </motion.div>
         </motion.div>
