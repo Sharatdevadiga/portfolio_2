@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -8,6 +8,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { Mail, Phone, MapPin, Send, Github, Linkedin, MessageCircle, Globe } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
+import emailjs from 'emailjs-com'
+import { useRouter } from 'next/navigation'
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -18,42 +20,85 @@ export default function ContactForm() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
+  const router = useRouter()
+  // Spam protection: honeypot and timing
+  const honeypotRef = useRef<HTMLInputElement>(null)
+  const formLoadTime = useRef<number>(0)
+
+  useEffect(() => {
+    formLoadTime.current = Date.now()
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-
-      const data = await response.json()
-
-      if (response.ok && data.success) {
-        setFormData({ name: '', email: '', subject: '', message: '' })
-        toast({
-          title: "Message sent successfully!",
-          description: "Thank you for your message. I'll get back to you soon.",
-        })
-      } else {
-        toast({
-          title: "Error sending message",
-          description: data.message || "Please try again later.",
-          variant: "destructive",
-        })
-      }
-    } catch (error) {
-      console.error('Form submission error:', error)
+    // Spam protection: honeypot
+    if (honeypotRef.current && honeypotRef.current.value) {
       toast({
-        title: "Error sending message",
-        description: "Please check your connection and try again.",
-        variant: "destructive",
+        title: 'Spam detected',
+        description: 'Submission blocked.',
+        variant: 'destructive',
       })
+      setIsSubmitting(false)
+      return
+    }
+    // Spam protection: timing (block if submitted <2s after load)
+    if (Date.now() - formLoadTime.current < 2000) {
+      toast({
+        title: 'Submission too fast',
+        description: 'Please wait a moment before submitting.',
+        variant: 'destructive',
+      })
+      setIsSubmitting(false)
+      return
+    }
+    // Simple spam check: require a real name and message length
+    if (formData.name.length < 2 || formData.message.length < 10) {
+      toast({
+        title: 'Invalid submission',
+        description: 'Please enter a valid name and message.',
+        variant: 'destructive',
+      })
+      setIsSubmitting(false)
+      return
+    }
+    try {
+      // Send email to you (admin notification)
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        {
+          from_name: formData.name,
+          // from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      )
+      // Send auto-reply to user
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_AUTOREPLY_TEMPLATE_ID!,
+        {
+          to_name: formData.name,
+          email: formData.email, // user's email for auto-reply
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      )
+      setFormData({ name: '', email: '', subject: '', message: '' })
+      toast({
+        title: 'Message sent successfully!',
+        description: "Thank you for your message. I'll get back to you soon.",
+      })
+      router.push('/feedback/success/message-sent')
+    } catch (error) {
+      console.error('EmailJS error:', error)
+      toast({
+        title: 'Error sending message',
+        description: 'Please try again later.',
+        variant: 'destructive',
+      })
+      router.push('/feedback/error/message-failed')
     } finally {
       setIsSubmitting(false)
     }
@@ -256,6 +301,15 @@ export default function ContactForm() {
                 </div>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Honeypot field for spam protection */}
+                  <input
+                    type="text"
+                    name="company"
+                    ref={honeypotRef}
+                    autoComplete="off"
+                    tabIndex={-1}
+                    className="hidden"
+                  />
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="name" className="text-muted-foreground font-medium">Full Name</Label>
