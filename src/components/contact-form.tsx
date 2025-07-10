@@ -86,18 +86,9 @@ export default function ContactForm() {
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       )
       setFormData({ name: '', email: '', subject: '', message: '' })
-      toast({
-        title: 'Message sent successfully!',
-        description: "Thank you for your message. I'll get back to you soon.",
-      })
       router.push('/feedback/success/message-sent')
     } catch (error) {
       console.error('EmailJS error:', error)
-      toast({
-        title: 'Error sending message',
-        description: 'Please try again later.',
-        variant: 'destructive',
-      })
       router.push('/feedback/error/message-failed')
     } finally {
       setIsSubmitting(false)
