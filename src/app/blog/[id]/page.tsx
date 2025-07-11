@@ -9,11 +9,11 @@ import hljs from 'highlight.js'
 import 'highlight.js/styles/github-dark.css'
 
 interface BlogDetailPageProps {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export async function generateMetadata({ params }: BlogDetailPageProps): Promise<Metadata> {
-  const id = params.id
+  const { id } = await params
   const post = blogPosts.find((p) => p.id === id)
 
   if (!post) return {}
@@ -82,8 +82,10 @@ function BlogContent({ content }: { content: string }) {
   )
 }
 
-export default function BlogDetailPage({ params }: BlogDetailPageProps) {
-  const post = blogPosts.find((p) => p.id === params.id)
+export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
+  const { id } = await params
+  const post = blogPosts.find((p) => p.id === id)
+  
   if (!post) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-secondary/10 to-background flex items-center justify-center">
@@ -97,7 +99,9 @@ export default function BlogDetailPage({ params }: BlogDetailPageProps) {
       </div>
     )
   }
+  
   const relatedPosts = blogPosts.filter((p) => p.id !== post.id).slice(0, 2)
+  
   return (
     <main className="min-h-screen bg-gradient-to-br from-background via-secondary/10 to-background">
       {/* Hero Section */}

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -64,9 +65,11 @@ export default function Projects() {
             <Card key={index} className="glass border-border hover:border-secondary/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-secondary/20 group card-glow ray-light">
               <CardContent className="p-0">
                 <div className="aspect-video bg-gradient-to-br from-secondary/20 to-accent/20 p-4 flex items-center justify-center overflow-hidden">
-                  <img
+                  <Image
                     src={project.image}
                     alt={project.title}
+                    width={400}
+                    height={240}
                     className="w-full h-full object-cover rounded-lg"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
