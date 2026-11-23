@@ -217,7 +217,7 @@ export default function ContactForm() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground">Location</h3>
-                      <p className="text-muted-foreground text-sm">Sirsi, Karnataka, India</p>
+                      <p className="text-muted-foreground text-sm">Karnataka, India</p>
                     </div>
                   </motion.div>
                 </div>

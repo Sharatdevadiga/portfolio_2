@@ -75,7 +75,7 @@ export default function ContactSection() {
               <MapPin className="text-blue-500" size={32} />
             </div>
             <h3 className="text-lg font-semibold mb-2">Location</h3>
-            <p className="text-muted-foreground">Sirsi, Karnataka, India</p>
+            <p className="text-muted-foreground">Karnataka, India</p>
           </motion.div>
         </motion.div>
         

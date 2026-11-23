@@ -16,6 +16,16 @@ export default function CertificationsContent() {
 
   const certifications = [
     {
+      title: "AWS Certified Cloud Practitioner",
+      issuer: "Amazon Web Services",
+      date: "2025",
+      description: "Foundational AWS certification covering cloud concepts, core AWS services, security and compliance, and billing and pricing.",
+      skills: ["AWS", "Cloud Concepts", "Security", "Cloud Architecture", "Pricing"],
+      image: "/certificateImages/aws-certified-cloud-practitioner.png",
+      status: "Completed",
+      category: "Cloud"
+    },
+    {
       title: "Full Stack Web Development",
       issuer: "AlmaBetter",
       date: "2024",
@@ -296,7 +306,7 @@ export default function CertificationsContent() {
           transition={{ delay: 1.2 }}
         >
           {[
-            { number: "9+", label: "Certifications", icon: Award },
+            { number: "10+", label: "Certifications", icon: Award },
             { number: "1000+", label: "Hours of Learning", icon: Calendar },
             { number: "20+", label: "Technologies", icon: Code },
             { number: "Top 3", label: "AlmaBetter Ranking", icon: Trophy }

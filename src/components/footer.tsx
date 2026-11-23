@@ -42,7 +42,7 @@ export default function Footer() {
           <motion.div className="space-y-4" variants={itemVariants}>
             <h3 className="text-2xl font-bold gradient-text font-poppins">Sharath Devadiga</h3>
             <p className="text-foreground/80">
-              Software Developer passionate about creating innovative web solutions.
+              Full Stack Software Engineer passionate about creating innovative web solutions.
             </p>
             <div className="flex space-x-4">
               <motion.a 
@@ -122,7 +122,7 @@ export default function Footer() {
             <div className="space-y-2 text-foreground/80">
               <p>sharathdevadiga0046@gmail.com</p>
               <p>+91 6362053828</p>
-              <p>Sirsi, Karnataka</p>
+              <p>Karnataka, India</p>
             </div>
           </motion.div>
         </motion.div>

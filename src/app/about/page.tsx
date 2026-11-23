@@ -49,7 +49,7 @@ export default function About() {
     { icon: Code, value: "20+", label: "Projects Built", color: "text-secondary" },
     { icon: Trophy, value: "2x", label: "Performance Boost", color: "text-accent" },
     { icon: Users, value: "Top 3", label: "Cohort Ranking", color: "text-secondary" },
-    { icon: Calendar, value: "1+", label: "Years Experience", color: "text-accent" }
+    { icon: Calendar, value: "2+", label: "Years Experience", color: "text-accent" }
   ];
 
   return (
@@ -91,7 +91,7 @@ export default function About() {
               className="text-xl md:text-2xl text-foreground/90 max-w-3xl mx-auto leading-relaxed"
               variants={itemVariants}
             >
-              Passionate <span className="text-blue-400 font-semibold">Software Developer</span> crafting 
+              Passionate <span className="text-blue-400 font-semibold">Full Stack Software Engineer</span> crafting 
               innovative digital solutions with modern technologies and creative problem-solving
             </motion.p>
 
@@ -136,15 +136,16 @@ export default function About() {
                 <div className="space-y-4 text-foreground/80 leading-relaxed">
                   <p>
                     Hello! I&apos;m <span className="text-blue-400 font-semibold">Sharath Devadiga</span>, 
-                    a passionate Software Developer who loves turning ideas into reality through code. 
+                    a passionate Full Stack Software Engineer who loves turning ideas into reality through code. 
                     My journey began with curiosity about how websites work, and has evolved into a 
                     deep passion for creating digital experiences that matter.
                   </p>
                   <p>
-                    Currently working at <span className="text-purple-400 font-semibold">DocTrue Technologies</span>, 
-                    I&apos;ve successfully improved application performance by <span className="text-green-400 font-bold">2x</span> and enhanced security through 
-                    advanced authentication systems. I believe in writing clean, maintainable code that 
-                    solves real-world problems.
+                    Currently a <span className="text-purple-400 font-semibold">Software Engineer at Transfi</span>, 
+                    I build treasury dashboards, trading automation, LLM-powered analytics and secure payment flows with React, 
+                    TypeScript and Node.js. Before that, at DocTrue Technologies, I made dashboards load <span className="text-green-400 font-bold">2x</span> faster 
+                    and improved database performance by <span className="text-green-400 font-bold">3x</span>. I believe in writing clean, 
+                    maintainable code that solves real-world problems.
                   </p>
                   <p>
                     When I&apos;m not coding, you&apos;ll find me exploring new technologies, contributing to 
@@ -198,7 +199,7 @@ export default function About() {
                       <div>
                         <h3 className="font-semibold text-foreground mb-2">Performance & Security</h3>
                         <p className="text-foreground/70 text-sm leading-relaxed">
-                          Optimizing for speed and security from day one. My work at DocTrue resulted in <span className="text-green-400 font-semibold">2x</span> performance improvements and enhanced authentication systems.
+                          Optimizing for speed and security from day one. At DocTrue I made dashboards load <span className="text-green-400 font-semibold">2x</span> faster, and at Transfi I built zero-trust authentication for payment flows.
                         </p>
                       </div>
                     </div>
@@ -281,41 +282,94 @@ export default function About() {
                     <div className="absolute left-0 top-2 w-3 h-3 bg-secondary rounded-full group-hover:scale-125 transition-transform"></div>
                     <div className="absolute left-1 top-6 w-0.5 h-20 bg-gradient-to-b from-secondary to-accent opacity-50"></div>
                     
-                    <div className="bg-gradient-to-r from-blue-500/5 to-cyan-500/5 rounded-2xl p-6 border border-blue-500/20 group-hover:border-blue-500/40 transition-colors">
-                      <h3 className="text-xl font-bold text-foreground mb-1">Software Developer</h3>
-                      <p className="text-blue-400 font-semibold mb-2">DocTrue Technologies</p>
+                    <div className="bg-gradient-to-r from-blue-500/5 to-cyan-500/5 border-blue-500/20 group-hover:border-blue-500/40 rounded-2xl p-6 border transition-colors">
+                      <h3 className="text-xl font-bold text-foreground mb-1">Software Engineer</h3>
+                      <p className="text-blue-400 font-semibold mb-2">Transfi</p>
                       <div className="flex items-center gap-2 text-foreground/60 mb-4">
                         <Calendar size={16} />
-                        <span>Nov 2024 - Present</span>
+                        <span>Nov 2025 - Present</span>
                       </div>
                       <ul className="space-y-2 text-foreground/70">
                         <li className="flex items-start gap-2">
                           <TrendingUp className="text-green-400 mt-1 flex-shrink-0" size={16} />
-                          <span>Developed responsive web pages using React.js and TypeScript, improving application load speed by <span className="text-green-400 font-semibold">2x</span> through front-end performance optimizations</span>
+                          <span>Designed and shipped the treasury P2P dashboard in React, TypeScript and Node.js, bringing ad management, order book, order tracking, virtual accounts and trade analytics into one place</span>
                         </li>
                         <li className="flex items-start gap-2">
-                          <Code className="text-blue-400 mt-1 flex-shrink-0" size={16} />
-                          <span>Built REST APIs for subscription management and developed systems for prescription and analytics</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <Zap className="text-purple-400 mt-1 flex-shrink-0" size={16} />
-                          <span>Enhanced JWT-based authentication and authorization system to improve security and access control</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <Users className="text-cyan-400 mt-1 flex-shrink-0" size={16} />
-                          <span>Collaborated with cross-functional teams to design and implement new features, resulting in a <span className="text-green-400 font-semibold">20%</span> increase in bookings</span>
+                          <Sparkles className="text-pink-400 mt-1 flex-shrink-0" size={16} />
+                          <span>Built LLM-powered analysis end to end that summarizes dashboard data and flags anomalies and risks</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <Rocket className="text-orange-400 mt-1 flex-shrink-0" size={16} />
-                          <span>Automated manual template creation process, reducing onboarding time for new customers by <span className="text-green-400 font-semibold">40%</span></span>
+                          <span>Built P2P trading automation for maker and taker flows, order placement and dispute alerting, replacing manual treasury execution</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <Globe className="text-indigo-400 mt-1 flex-shrink-0" size={16} />
-                          <span>Enhanced WhatsApp bot functionality and implemented patient notification system, leading to a <span className="text-green-400 font-semibold">15%</span> rise in appointment bookings</span>
+                          <span>Built a market data platform that collects rates across currencies and exchanges into MongoDB, giving treasury continuous pricing visibility</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <Zap className="text-purple-400 mt-1 flex-shrink-0" size={16} />
+                          <span>Implemented zero-trust authentication for payment flows with request signing, replay protection and scoped session tokens</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <Code className="text-blue-400 mt-1 flex-shrink-0" size={16} />
+                          <span>Extended the ramp widget with custom partner journeys, owning the frontend and the backend session, auth and order APIs</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <Users className="text-cyan-400 mt-1 flex-shrink-0" size={16} />
+                          <span>Partnered with treasury, support, product, design and security teams, and directly with customers, to ship features and improve UI/UX</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </motion.div>
+
+                  {/* Previous Role */}
+                  <motion.div 
+                    className="relative pl-8 group"
+                    whileHover={{ x: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <div className="absolute left-0 top-2 w-3 h-3 bg-secondary rounded-full group-hover:scale-125 transition-transform"></div>
+                    <div className="absolute left-1 top-6 w-0.5 h-20 bg-gradient-to-b from-secondary to-accent opacity-50"></div>
+                    
+                    <div className="bg-gradient-to-r from-cyan-500/5 to-teal-500/5 border-cyan-500/20 group-hover:border-cyan-500/40 rounded-2xl p-6 border transition-colors">
+                      <h3 className="text-xl font-bold text-foreground mb-1">Full Stack Developer</h3>
+                      <p className="text-cyan-400 font-semibold mb-2">DocTrue Technologies</p>
+                      <div className="flex items-center gap-2 text-foreground/60 mb-4">
+                        <Calendar size={16} />
+                        <span>Nov 2024 - Nov 2025</span>
+                      </div>
+                      <ul className="space-y-2 text-foreground/70">
+                        <li className="flex items-start gap-2">
+                          <TrendingUp className="text-green-400 mt-1 flex-shrink-0" size={16} />
+                          <span>Built React and Next.js dashboards in TypeScript and Zustand, making them load <span className="text-green-400 font-semibold">2x</span> faster through front-end optimization</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <Code className="text-blue-400 mt-1 flex-shrink-0" size={16} />
+                          <span>Built and optimized Node.js/Express REST APIs for subscription, prescription and analytics systems, with JWT authentication and role-based access</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <Target className="text-pink-400 mt-1 flex-shrink-0" size={16} />
-                          <span>Designed database schema and improved database performance by <span className="text-green-400 font-semibold">3x</span> through efficient indexing and query optimization</span>
+                          <span>Optimized database schemas, indexing and queries, improving query performance by <span className="text-green-400 font-semibold">3x</span>, and added BullMQ background jobs</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <Rocket className="text-orange-400 mt-1 flex-shrink-0" size={16} />
+                          <span>Automated manual template creation, reducing new-customer onboarding time by <span className="text-green-400 font-semibold">40%</span></span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <Globe className="text-indigo-400 mt-1 flex-shrink-0" size={16} />
+                          <span>Added a new WhatsApp bot provider and patient notifications, raising appointment bookings by <span className="text-green-400 font-semibold">25%</span></span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <Zap className="text-purple-400 mt-1 flex-shrink-0" size={16} />
+                          <span>Built a QR-based login for the TV site, making sign-in <span className="text-green-400 font-semibold">3x</span> faster</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <Sparkles className="text-yellow-400 mt-1 flex-shrink-0" size={16} />
+                          <span>Integrated AWS SNS (CloudWatch alerts), text-to-speech, OpenAI APIs and payment gateways</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <Users className="text-cyan-400 mt-1 flex-shrink-0" size={16} />
+                          <span>Planned features with clients and cross-functional teams, contributing to a <span className="text-green-400 font-semibold">20%</span> rise in bookings</span>
                         </li>
                       </ul>
                     </div>
@@ -365,29 +419,31 @@ export default function About() {
 
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 group">
-                    <div className="p-2 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 rounded-lg group-hover:from-blue-500/30 group-hover:to-indigo-500/30 transition-colors">
-                      <GraduationCap className="text-blue-400" size={18} />
+                    <div className="p-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg group-hover:from-purple-500/30 group-hover:to-pink-500/30 transition-colors">
+                      <Code className="text-purple-400" size={18} />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-base font-semibold text-foreground">Bachelor of Engineering</h3>
-                      <p className="text-blue-400 text-sm">The National Institute Of Engineering</p>
+                      <h3 className="text-base font-semibold text-foreground">Full Stack Development</h3>
+                      <p className="text-purple-400 text-sm">AlmaBetter</p>
+                      <p className="text-foreground/60 text-xs mt-0.5">Oct 2023 - Oct 2024</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <Star  size={14} />
-                        <span className="text-foreground/70 text-sm">CGPA: <span className=" font-medium">9.0/10</span></span>
+                        <Trophy  size={14} />
+                        <span className="text-foreground/70 text-sm">Top <span className=" font-medium">3</span> in cohort of 100+</span>
                       </div>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3 group">
-                    <div className="p-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg group-hover:from-purple-500/30 group-hover:to-pink-500/30 transition-colors">
-                      <Code className="text-purple-400" size={18} />
+                    <div className="p-2 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 rounded-lg group-hover:from-blue-500/30 group-hover:to-indigo-500/30 transition-colors">
+                      <GraduationCap className="text-blue-400" size={18} />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-base font-semibold text-foreground">Full Stack Web Development</h3>
-                      <p className="text-purple-400 text-sm">AlmaBetter</p>
+                      <h3 className="text-base font-semibold text-foreground">Bachelor of Engineering</h3>
+                      <p className="text-blue-400 text-sm">The National Institute of Engineering</p>
+                      <p className="text-foreground/60 text-xs mt-0.5">Jun 2018 - Aug 2022</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <Trophy  size={14} />
-                        <span className="text-foreground/70 text-sm">Top <span className=" font-medium">3</span> in cohort of 100+</span>
+                        <Star  size={14} />
+                        <span className="text-foreground/70 text-sm">CGPA: <span className=" font-medium">9.0/10</span></span>
                       </div>
                     </div>
                   </div>

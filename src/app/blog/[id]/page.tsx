@@ -181,7 +181,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
               <div className="flex-1">
                 <h3 className="text-2xl font-semibold mb-3">Sharath Devadiga</h3>
                 <p className="text-muted-foreground mb-6 leading-relaxed text-lg">
-                  Software Developer passionate about creating efficient, user-friendly web applications. Currently building projects with React, Node.js, and modern JavaScript technologies.
+                  Full Stack Software Engineer passionate about creating efficient, user-friendly web applications. Currently building fintech products at Transfi with React, TypeScript and Node.js.
                 </p>
                 <div className="flex gap-4">
                   <Button asChild className="bg-gradient-to-r from-secondary to-accent text-primary">
