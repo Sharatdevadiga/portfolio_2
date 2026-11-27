@@ -23,7 +23,7 @@ export default function HeroSection() {
       language: "javascript",
       code: `const developer = {
   name: "Sharath",
-  role: "Software Developer",
+  role: "Software Engineer",
   passion: "Building amazing UIs",
   skills: ["React", "Node.js", "MongoDB"]
 };
@@ -132,7 +132,7 @@ projects.map(p => "✅ " + p);`,
               <div className="space-y-6">
                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold font-poppins leading-tight">
                   <span className="text-foreground">Software</span>
-                  <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Developer</span>
+                  <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Engineer</span>
                 </h1>
                 
                 <p className="text-xl md:text-2xl text-foreground/80 max-w-2xl leading-relaxed">
@@ -180,7 +180,7 @@ projects.map(p => "✅ " + p);`,
                 variants={itemVariants}
               >
                 <span className="text-foreground">Software</span>
-                <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Developer</span>
+                <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Engineer</span>
               </motion.h1>
               
               <motion.p 
@@ -194,7 +194,7 @@ projects.map(p => "✅ " + p);`,
               <motion.div className="flex flex-wrap gap-4" variants={itemVariants}>
                 <div className="flex items-center gap-2 text-foreground/60">
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                  <span>1+ Year Experience</span>
+                  <span>2+ Years Experience</span>
                 </div>
                 <div className="flex items-center gap-2 text-foreground/60">
                   <div className="w-2 h-2 bg-accent rounded-full animate-pulse delay-300"></div>
@@ -222,7 +222,7 @@ projects.map(p => "✅ " + p);`,
                 className="px-8 py-4 backdrop-blur-sm text-foreground font-semibold border-border/50 hover:bg-foreground/10 transition-all duration-300 hover:scale-105"
                 asChild
               >
-                <a href="https://docs.google.com/document/d/1k9g79yP7gntQS8wxfcD88VLYUIoUm9YBlRamOUivllY/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
+                <a href="/Sharath_Devadiga_Resume.pdf" target="_blank" rel="noopener noreferrer">
                   <Download className="mr-2" size={20} />
                   Download Resume
                 </a>

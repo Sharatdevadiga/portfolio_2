@@ -38,6 +38,12 @@ export const skills: Skill[] = [
     category: "Frontend"
   },
   {
+    name: "Zustand",
+    icon: "🐻",
+    color: "#F59E0B",
+    category: "Frontend"
+  },
+  {
     name: "Tailwind",
     icon: "🎨",
     color: "#06B6D4",
@@ -67,6 +73,12 @@ export const skills: Skill[] = [
     name: "Express.js",
     icon: "⚡",
     color: "#FFFFFF",
+    category: "Backend"
+  },
+  {
+    name: "BullMQ",
+    icon: "📬",
+    color: "#E0234E",
     category: "Backend"
   },
   {
@@ -108,5 +120,13 @@ export const skills: Skill[] = [
     icon: "🐳",
     color: "#2496ED",
     category: "Tools"
+  },
+
+  // AI Tools
+  {
+    name: "Claude",
+    icon: "🤖",
+    color: "#D97757",
+    category: "AI Tools"
   }
 ];
